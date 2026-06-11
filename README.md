@@ -28,7 +28,7 @@ An internal tool that fetches live weather data for Nigerian agricultural locati
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/ugwucollins/weather_history.git
+git clone https://github.com/ugwucollins/weather_History.git
 cd weather_History 
 ```
 
@@ -76,6 +76,20 @@ The app opens automatically at http://localhost:5173
 
 ---
 
+## .env
+
+#Client
+VITE_BASE_URL='http://127.0.0.1:8000'
+
+#server
+APP_NAME='Weather History'
+APP_NAME_DESCRIPTION='A simple API to get weather history data'
+DEBUG_MODE=true
+DATABASE_URL='sqlite:///./weather_history.db'
+CLIENT_URL="http://localhost:5173"
+WEATHER_URL='https://api.open-meteo.com/v1/forecast'
+
+
 ## API Endpoints
 
 ### `GET /locations`
@@ -106,6 +120,7 @@ Returns 30 daily weather readings for the given location.
     {
       "date": "2026-05-10",
       "temp_max": 33.1,
+      "daily": {},
       "temp_min": 24.5,
       "precipitation": 0.0,
       "wind_speed_max": 18.2
@@ -144,7 +159,7 @@ Returns aggregated statistics over the 30-day window.
 ---
 
 ### `GET /health`
-Simple liveness check. Returns `{ "status": "ok", "db_exists": true }`.
+Simple liveness check. Returns `{"message": 'Weather History FastApi', "success": True}`.
 
 ---
 
@@ -202,17 +217,20 @@ The developer is able to explain every line of code in this repository.
 ```
 daintymindz-weather/
 ├── backend/
-│   ├── fetch_weather.py   # Data pipeline: Open-Meteo → SQLite
+│   ├── config.py   # Data pipeline: .env → config.py
 │   ├── main.py            # FastAPI application
 |   |_ model.py
-|    |schema.py
-│   ├── requirements.txt
+|   |_ schema.py
+│   ├── getLocation.py      # Data pipeline: Open-Meteo → SQLite
 │   └── weather_history.db         # Created automatically on first fetch
 ├── frontend/
 │   ├── public/
 │   ├── src/
-│   │   ├── App.js         # Main React component
-│   │   ├── index.js
+│   │   ├── Components/
+│   │   ├── context/
+│   │   ├── Home/
+│   │   ├── App.tsx         # Main React component
+│   │   ├── Home.tsx
 │   │   └── index.css
 │   │   └── index.html
 │   └── package.json
