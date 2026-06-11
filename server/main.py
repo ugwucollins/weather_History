@@ -43,7 +43,7 @@ def get_db():
         db.close()
 
 
-@app.get('/')
+@app.get('/health')
 def index():
     return JSONResponse(
         status_code=200,
