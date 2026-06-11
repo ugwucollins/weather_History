@@ -1,23 +1,29 @@
 
 import { Sun, Thermometer } from 'lucide-react';
 import { useContext } from 'react';
+import AreaChartExample from './../component/AreaChart';
 import LineChart from './../component/LineChart';
 import { CreateWeatherContext } from './../context/WeatherContext';
 import CardSection from './CardSection';
 import HomeCard from './HomeCard';
+
 
 const HomeBanner = () => {
     const { weather }: any = useContext(CreateWeatherContext)
 
     return (
         <div className='w-full flex justify-center flex-col items-center '>
-            <div className='w-full flex flex-col gap-y-3 max-w-200 py-3 relative'>
+            <div className='w-full flex flex-col justify-center items-center gap-y-3 max-w-200 py-3 relative'>
                 <Header />
                 <HomeCard />
                 <CardSection />
                 {weather &&
-                    <LineChart data={weather}
-                    />
+                    <>
+                        <LineChart data={weather}
+                        />
+                        <AreaChartExample data={weather} />
+                    </>
+
                 }
             </div>
         </div>
@@ -26,7 +32,6 @@ const HomeBanner = () => {
 
 export default HomeBanner
 
-// import { useContext } from 'react';
 const Header = () => {
     const locations = ['select Location', 'lagos', 'kano', 'ibadan']
     const { search, setSearch, CurrentWeather }: any = useContext(CreateWeatherContext)
