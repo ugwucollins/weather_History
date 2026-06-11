@@ -7,44 +7,40 @@ import DateFormat from './../context/DateFormat';
 const LineChart = (
     { data }: any
 ) => {
+
     const [days, setDays] = useState<any>([])
-    
-    const [dataAll,setDataAll] =useState<any>([])
+    const [dataAll, setdataAll] = useState<any>([])
 
 //"Max °C"
     useEffect(() => {
-        const dates = data.daily.time.map((item: any,index) => {
+        const dates = data.daily.time.map((item: any, index: number) => {
             return {
-                date: +DateFormat(item).dateName.slice(0,2),
-                Max:data.temperature_max[index],
-                Min:data.temperature_min[index],
-
+                date: +DateFormat(item).dateName.slice(0, 2),
+                Max: data.temperature_max[index],
+                Min: data.temperature_min[index],
             }
         })
         setDays(dates)
-        setDataAll(datas)
+        setdataAll(dates)
 
-        
     }, [data])
 
-    const datas = dataAll?.map((item: any,index) => {
-        console.log(item);
+    const datas = dataAll?.map((item: any) => {
         return {
             date: days,
-            Max: item.max,
+            Max: item.Max,
             Min: item.Min,
         }
     })
-    console.log(datas);
 
 
 
 
     return (
-        <div style={{ width: '100%', maxWidth: '800px', height: '100%', maxHeight: '70vh', aspectRatio: 1.618 }}>
+        <div style={{ width: '100%', maxWidth: '800px', height: '100%', maxHeight: '70vh', aspectRatio: 1.618 }} className='py-2 my-5 px-4 bg-bg-color/5 rounded-2xl shadow-2xl drop-shadow-2xl border cursor-pointer border-border-color/20 backdrop-blur-2xl hover:shadow-bg-color/30 transition-all duration-150'>
             <ResponsiveContainer width="100%" height="100%">
                 <RechartsLineChart
-                    data={dataAll||datas}
+                    data={dataAll || datas}
                     margin={{
                         top: 5,
                         right: 0,
@@ -53,8 +49,8 @@ const LineChart = (
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-3)" />
-                    <XAxis dataKey="date" stroke="var(--bg-color)" />
-                    <YAxis width="auto" stroke="var(--bg-color)" />
+                    <XAxis dataKey="date" stroke="var(--bg)" />
+                    <YAxis width="auto" stroke="var(--bg)" />
                     <Tooltip
                         cursor={{
                             stroke: 'var(--color-border-2)',
@@ -68,20 +64,20 @@ const LineChart = (
                     <Line
                         type="monotone"
                         dataKey="Max"
-                        stroke="var(--secondary-color)"
+                        stroke="var(--primary)"
                         dot={{
-                            fill: 'var(--secondary-color)',
+                            fill: 'var(--primary)',
                         }}
-                        activeDot={{ r: 8, stroke: 'var(--secondary-color)' }}
+                        activeDot={{ r: 8, stroke: 'var(--primary)' }}
                     />
                     <Line
                         type="monotone"
                         dataKey="Min"
-                        stroke="var(--primary-color)"
+                        stroke="var(--accent)"
                         dot={{
-                            fill: 'var(--primary-color)',
+                            fill: 'var(--accent)',
                         }}
-                        activeDot={{ stroke: 'var(--primary-color)' }}
+                        activeDot={{ stroke: 'var(--accent)' }}
                     />
                     <RechartsDevtools />
                 </RechartsLineChart>
